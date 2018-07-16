@@ -1,0 +1,100 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Jon Belelieu Interview Assignment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/simple-grid.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12" id="mainSearch">
+        <div class="padInternal">
+          <input type="text" autocomplete="off" id="search-box" placeholder="Search for Restaurants by Name, Cuisine, Location" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3">
+        <div class="padInternal" id="options">
+          <a href="#" id="showFilters" onClick="showFilters()">Filters</a>
+
+          <div id="filterDiv">
+            <h2 class="noMarginTop">Cuisine/Food Type</h2>
+            <div id="cuisineHolder">
+              <input type="text" id="cuisineSearch" placeholder="Filter Cuisines..." />
+              <ul id="cuisines"></ul>
+            </div>
+
+            <h2>Payment Options</h2>
+            <ul id="paymentOptions">
+              <li id="facet-payment_options-AMEXAmericanExpress" onClick="addFacet('payment_options', 'AMEX');">AMEX/American Express</li>
+              <li id="facet-payment_options-Discover" onClick="addFacet('payment_options', 'Discover');">Discover<br />Diners Club<br />Carte Blanche </li>
+              <li id="facet-payment_options-MasterCard" onClick="addFacet('payment_options', 'MasterCard');">MasterCard</li>
+              <li id="facet-payment_options-Visa" onClick="addFacet('payment_options', 'Visa');">Visa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-9">
+        <div id="hits" class="weak small text-right">
+          <span id="hits_counter" class="noPaddingRight"></span>
+          <span id="hits_pages"></span>
+        </div>
+
+        <div id="placeholder">
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+          <div class="holderItem">
+            <div class="bgAnimate bgHolderWhite image"></div><div class="bgAnimate bgHolderWhite line1"></div><div class="bgAnimate bgHolderWhite line2"></div><div class="bgAnimate bgHolderWhite line3"></div>
+          </div>
+        </div>
+        
+        <div id="container" class="padInternal"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery include for DOM manipulation -->
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  
+  <!-- Algolia Includes and Settings -->
+  <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch-helper@2.26.1/dist/algoliasearch.helper.min.js"></script>
+  <script type="text/javascript">
+    let client = algoliasearch('9TUKQ0MGR9', '15af8650ab3b7b34d0728d008dc799d5');
+    let helper = algoliasearchHelper(client, 'opentableinterview', {
+      facets: ['food_type', 'payment_options'],
+    });
+  </script>
+
+  <!-- Primary Search Functionality -->
+  <script src="js/internal.js"></script>
+</body>
+</html>
