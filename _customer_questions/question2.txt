@@ -1,0 +1,19 @@
+
+Question 2: Hello,
+Sorry to give you the kind of feedback that I know you do not want to hear, but I really hate the new dashboard design. Clearing and deleting indexes are now several clicks away. I am needing to use these features while iterating, so this is inconvenient.
+Regards, Matt
+
+----------------------------------
+
+Matt,
+
+Thank you for your feedback regarding our new dashboard design -- it is truly appreciated and we take all such feedback very seriously.
+
+I understand that you are not happy with the new dashboard design and for that I apologize. When making UI choices, we go through a comprehensive process to determine how our dashboards will function and look. A number of factors inform how those decisions are made, including new functionality requirements, new technologies, and user feedback.
+
+While we understand that not everyone is going to be completely happy with some of the changes we make, I want to make it very clear that customer satisfaction is our top priority and that we listen to all customer feedback. In this case I will forward your feedback to our UI/UX team so that they can take this into consideration while they continue to improve upon our overall user experience.
+
+Is there anything else on the new dashboard that you'd like them to consider?
+
+Thanks,
+Jon Belelieu, Solutions Engineer, Algolia

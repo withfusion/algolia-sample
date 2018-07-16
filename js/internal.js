@@ -43,17 +43,9 @@ function positionCallback(position)
 function loading(areWe = true)
 {
   if (areWe) {
-    /*
-    $('#loading').empty();
-
-    for (i = 0; i < 10; i++) {
-      $('#placeholder').clone().appendTo('#loading');
-    }
-    */
-
-    $('#placeholder').show();
+    $('.removeLoading').show();
   } else {
-    $('#placeholder').hide();
+    $('.removeLoading').hide();
   }
 }
 

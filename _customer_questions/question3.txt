@@ -1,0 +1,33 @@
+
+Question 3: Hi,
+I'm looking to integrate Algolia in my website. Will this be a lot of development work for me? What's the high level process look like?
+Regards, Leo
+
+----------------------------------
+
+Leo,
+
+Thank you for your interest in Algolia's search solutions!
+
+While some development work is required to integrate Algolia into your website, we do everything possible to help you along the way and make it as easy as possible.
+
+Our online step-by-step documentation and walkthroughs are designed to be easily consumable. Furthermore we offer a number of pre-built helper libraries and code snippets, available in most major web-based programming languages, which make integration into any environment seamless. And of course, we are always here to fill in any gaps and answer any questions you might have along the way!
+
+As far as the basic high level process goes, the integration generally involves the following steps:
+
+1. You upload your searchable database as either a CSV of JSON file via our online dashboard into an "index",
+2. You then set up some basic settings for that index, such as your "facets" to make searching, categorizing, and filtering results quicker,
+    1. See https://www.algolia.com/doc/guides/searching/faceting/
+3. You install the appropriate SDK onto your website and implement it according to our online guides.
+
+So, for example, if you choose to integrate our services using Javascript, we offer a fully featured Javascript API with detailed documentation which can be found here:
+https://www.algolia.com/doc/api-client/javascript/getting-started/
+
+We also offer a number of "helper" libraries that you can install directly on your website and which do a lot of the dirty work for you:
+https://community.algolia.com/algoliasearch-helper-js/
+https://www.algolia.com/doc/tutorials/search-ui/instant-search/build-an-instant-search-results-page/instantsearchjs/
+
+I hope that this helps clarify the process of integration. Please feel free to reach out to me if you have any additional questions.
+
+Thanks,
+Jon Belelieu, Solutions Engineer, Algolia

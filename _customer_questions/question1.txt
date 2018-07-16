@@ -1,0 +1,19 @@
+Question 1: Hello,
+I'm new to search engines, and there are a lot of concepts I'm not educated on. To make my onboarding smoother, it'd help if you could provide me with some definitions of the following concepts:
+* Records
+* Indexing
+I'm also struggling with understanding what types of metrics would be useful to include in the "Custom Ranking."
+Cheers, George
+
+----------------------------------
+
+Hi George,
+
+Thank you for your interest in Algolia's search solutions! I understand that a lot of the concepts behind searching can be complex so I'd be happy to help explain them further.
+
+Records and indices are two concepts that are fundamental to searching; to better illustrate how each fits into the search paradigm, picture a library. Within a library there are thousands of books -- those are equivalent to "records". But how do we easily find those books without randomly going through thousands of books every time we enter the library? That's where indices come into play. By categorizing records into logical groupings, we have a starting point from which we can start looking for books: that right there will cut down the time it takes to find a book drastically. For us 80s kids, that's pretty much what the dewey decimal system was designed to do -- yes, here at Algolia we can proudly say we've modernized the dewey decimal system!
+
+As far as metrics are concerned, the metrics you choose to include in a custom ranking can be tailored to your exact needs. Can you give me a little more insight into your company's goals so that I can better assist in this area?
+
+Thanks,
+Jon Belelieu, Solutions Engineer, Algolia
