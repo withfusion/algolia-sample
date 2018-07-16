@@ -279,10 +279,20 @@ a {
 }
 
 #locationError {
-  text-align: center;
+  position: fixed;
+  z-index: 10;
+  bottom: 24px;
+  right: 24px;
+  width: 300px;
+  background-color: #cc0000;
+  color: #fff !important;
   padding: 12px;
-  text-style: italic;
   font-size: 0.8em;
+  border-radius: 12px;
+}
+
+.white {
+  color: #fff !important;
 }
 
 .red {

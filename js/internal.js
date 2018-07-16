@@ -19,14 +19,36 @@ var facets = {
 function getLocate()
 {
   navigator.geolocation.getCurrentPosition(positionCallback, function(error) {
-      $('#locationError').show();
-
-      setTimeout(function() {
-        $('#locationError').hide();
-      }, 6000);
-
-      performSearch();
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        showError('Your location could not be detected so we\'re displaying generic results. Please type a city into the search bar, or reload and grant us location permissions for local results!');
+        break;
+      default:
+        showError('We tried to get your location but something went wrong. Please type a city into the search bar, or reload and grant us location permissions for local results!');
+        break;
+    }
   });
+}
+
+/**
+ *
+ */
+function closeError()
+{
+  $('#locationError').hide();
+}
+
+/**
+ *
+ */
+function showError(msg)
+{
+  $('#errorInternal').html(msg);
+  $('#locationError').show();
+
+  setTimeout(function() {
+    $('#locationError').hide();
+  }, 8000);
 }
 
 /**
@@ -35,8 +57,6 @@ function getLocate()
  */
 function positionCallback(position)
 {
-  loading(true);
-
   coordinates = position.coords.latitude + ', ' + position.coords.longitude;
 
   helper.aroundLatLng = coordinates;
@@ -229,7 +249,7 @@ function renderRating(star_count)
  */
 function performSearch()
 {
-  loading();
+  loading(true);
 
   helper.setQuery(query);
 
