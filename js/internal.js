@@ -7,6 +7,10 @@ let filters = {};
 let page = 0;
 let coordinates = null;
 let firstSearch = true;
+let facets = {
+  'food_type': [],
+  'payment_options': [],
+};
 
 /**
  * Prompt the user for their location and if provided
@@ -56,8 +60,20 @@ function renderFoodTypes(cuisines)
 {
   cuisines.sort(compare);
 
+  $("#cuisines").empty();
+
+  let useClass = '';
+
   for (i = 0; i < cuisines.length; i++) {
-    $("#cuisines").append('<li id="facet-food_type-' + cuisines[i].name.replace(/\W/g, '') + '" onClick="addFacet(\'food_type\', \'' + cuisines[i].name + '\');">' + cuisines[i].name + ' (' + cuisines[i].count + ')</li>');
+    let cleanName = cuisines[i].name.replace(/\W/g, '');
+
+    if (facets['food_type'].indexOf(cleanName) > -1) {
+      useClass = 'active';
+    } else {
+      useClass = '';
+    }
+
+    $("#cuisines").append('<li class="' + useClass + '" id="facet-food_type-' + cleanName + '" onClick="addFacet(\'food_type\', \'' + cuisines[i].name + '\');">' + cuisines[i].name + ' (' + cuisines[i].count + ')</li>');
   }
 }
 
@@ -83,9 +99,18 @@ function addFacet(facet, facetValue)
 {
   helper.toggleFacetRefinement(facet, facetValue);
 
-  let facetLiId = facetValue.replace(/\W/g, '');
+  let cleanName = facetValue.replace(/\W/g, '');
 
-  $('#facet-' + facet + '-' + facetLiId).toggleClass('active');
+  if (facets[facet].indexOf(cleanName) > -1) {
+    let facetIndex = facets[facet].indexOf(cleanName);
+    facets[facet].splice(facetIndex, 1);
+  } else {
+    facets[facet].push(cleanName);
+  }
+
+  console.log('Existing Facets:', facets);
+
+  $('#facet-' + facet + '-' + cleanName).toggleClass('active');
 
   page = 0;
 
@@ -219,15 +244,12 @@ function performSearch()
   helper.setQuery(query);
 
   if (coordinates) {
-    console.log('found coordinates', coordinates);
-
     helper.setQueryParameter('aroundLatLng', coordinates);
   }
 
   console.log('Settings page to ' + page);
   
   helper.setPage(page);
-  // helper.search().getPage();
 
   helper.search().getPage();
 }
@@ -291,11 +313,9 @@ helper.on('result', function(content)
 
   renderHits(content); 
 
-  if (firstSearch) {
-    let foodTypes = content.getFacetValues('food_type');
-    renderFoodTypes(foodTypes);
-    console.log(foodTypes);
-  }
+  let foodTypes = content.getFacetValues('food_type');
+  renderFoodTypes(foodTypes);
+  console.log('Rendering food types', foodTypes);
 
   loading(false);
   
