@@ -277,6 +277,17 @@ a {
   height: 18px;
 }
 
+#locationError {
+  text-align: center;
+  padding: 12px;
+  text-style: italic;
+  font-size: 0.8em;
+}
+
+.red {
+  color: red !important;
+}
+
 .bgAnimate {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;

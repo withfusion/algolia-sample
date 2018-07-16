@@ -21,11 +21,17 @@ function getLocate()
 {
   loading(true);
 
-  if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(positionCallback);
-  } else {
+  navigator.geolocation.getCurrentPosition(positionCallback, function(error) {
+      console.log('Location not permitted...');
+
+      $('#locationError').show();
+
+      setTimeout(function() {
+        $('#locationError').hide();
+      }, 4000);
+
       performSearch();
-  }
+  });
 }
 
 /**
@@ -238,8 +244,6 @@ function renderRating(star_count)
 function performSearch()
 {
   loading();
-
-  let searchElements = {};
 
   helper.setQuery(query);
 
