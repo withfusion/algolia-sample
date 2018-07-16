@@ -2,12 +2,10 @@
 // We prompt for the user's location.
 getLocate();
 
-let query = '';
-let filters = {};
-let storeFoodTypes = [];
-let page = 0;
-let coordinates = null;
-let facets = {
+var query = '';
+var page = 0;
+var coordinates = null;
+var facets = {
   'food_type': [],
   'payment_options': [],
 };
@@ -22,8 +20,6 @@ function getLocate()
   loading(true);
 
   navigator.geolocation.getCurrentPosition(positionCallback, function(error) {
-      console.log('Location not permitted...');
-
       $('#locationError').show();
 
       setTimeout(function() {
@@ -40,7 +36,7 @@ function getLocate()
  */
 function positionCallback(position)
 {
-  coordinates = `${position.coords.latitude}, ${position.coords.longitude}`;
+  coordinates = position.coords.latitude + ', ' + position.coords.longitude;
 
   helper.aroundLatLng = coordinates;
 
@@ -50,7 +46,7 @@ function positionCallback(position)
 /**
  * Simple toggle for the "loading" elements.
  */
-function loading(areWe = true)
+function loading(areWe)
 {
   if (areWe) {
     $('.removeLoading').show();
@@ -68,12 +64,12 @@ function renderFoodTypes(cuisines)
 
   $("#cuisines").empty();
 
-  let useClass = '';
+  var useClass = '';
 
   for (i = 0; i < cuisines.length; i++) {
-    let cleanName = cuisines[i].name.replace(/\W/g, '');
+    var cleanName = cuisines[i].name.replace(/\W/g, '');
 
-    if (facets['food_type'].indexOf(cleanName) > -1) {
+    if (facets.food_type.indexOf(cleanName) > -1) {
       useClass = 'active';
     } else {
       useClass = '';
@@ -105,16 +101,14 @@ function addFacet(facet, facetValue)
 {
   helper.toggleFacetRefinement(facet, facetValue);
 
-  let cleanName = facetValue.replace(/\W/g, '');
+  var cleanName = facetValue.replace(/\W/g, '');
 
   if (facets[facet].indexOf(cleanName) > -1) {
-    let facetIndex = facets[facet].indexOf(cleanName);
+    var facetIndex = facets[facet].indexOf(cleanName);
     facets[facet].splice(facetIndex, 1);
   } else {
     facets[facet].push(cleanName);
   }
-
-  console.log('Existing Facets:', facets);
 
   $('#facet-' + facet + '-' + cleanName).toggleClass('active');
 
@@ -129,11 +123,11 @@ function addFacet(facet, facetValue)
  */
 function renderPagination(totalHits, totalPages, currentPage)
 {
-  let html = '<span id="paginationBlock">';
-  let lastPage = 0;
-  let nextPage = 0;
-  let showLast = false;
-  let showNext = true;
+  var html = '<span id="paginationBlock">';
+  var lastPage = 0;
+  var nextPage = 0;
+  var showLast = false;
+  var showNext = true;
 
   if (currentPage > 0) {
     showLast = true;
@@ -162,7 +156,7 @@ function renderPagination(totalHits, totalPages, currentPage)
 function setPage(inputPage) {
   page = inputPage;
 
-  performSearch(true);
+  performSearch();
 }
 
 /**
@@ -170,7 +164,7 @@ function setPage(inputPage) {
  */
 function renderHits(content)
 {
-  let showPage = content.page + 1;
+  var showPage = content.page + 1;
 
   $('#hits_counter').html('Displaying ' + content.hits.length + ' of ' + content.nbHits + ' Results | Page ' + showPage + ' of ' + content.nbPages);
   $('#hits_pages').html(renderPagination(content.nbHits, content.nbPages, content.page));
@@ -180,7 +174,7 @@ function renderHits(content)
   } else {
     $('#container').html(function() {
       return $.map(content.hits, function(hit) {
-        let html = '<div class="result">';
+        var html = '<div class="result">';
         html += '  <a href="' + hit.mobile_reserve_url + '" target="_blank"><img class="restaurant" src="' + hit.image_url + '" /></a>';
         html += '  <h2><a href="' + hit.mobile_reserve_url + '" target="_blank">' + hit.name + '</a></h2>';
         html += '<p>' + renderRating(hit.stars_count) + ' (' + hit.reviews_count + ' reviews)</p>';
@@ -194,20 +188,8 @@ function renderHits(content)
 }
 
 /**
- * Add a filter via the facet tools
+ * For mobile, toggle filter menu.
  */
-function addFilter(name, value)
-{
-  // Resets the current page to 0
-  helper.toggleFacetRefinement(name, facetValue);
-
-  console.log('Adding Facet:', name, facetValue);
-
-  page = 0;
-
-  performSearch();
-}
-
 function showFilters() {
   $('#filterDiv').toggle();
   $('#showFilters').toggleClass('on');
@@ -218,10 +200,10 @@ function showFilters() {
  */
 function renderRating(star_count)
 {
-  let rounded = Math.round(star_count);
-  let totalFilled = 5 + rounded - 5;
-  let totalEmpty = 5 - totalFilled;
-  let display = '';
+  var rounded = Math.round(star_count);
+  var totalFilled = 5 + rounded - 5;
+  var totalEmpty = 5 - totalFilled;
+  var display = '';
 
   while (totalFilled > 0) {
     display += '<img src="resources/graphics/stars-plain.png" class="starImg" />';
@@ -241,7 +223,7 @@ function renderRating(star_count)
 /**
  * Perform a search
  */
-function performSearch(skipFacetRender = false)
+function performSearch()
 {
   loading();
 
@@ -250,31 +232,10 @@ function performSearch(skipFacetRender = false)
   if (coordinates) {
     helper.setQueryParameter('aroundLatLng', coordinates);
   }
-
-  console.log('Settings page to ' + page);
   
   helper.setPage(page);
 
   helper.search().getPage();
-}
-
-/**
- * helper.nextPage()
- * helper.previousPage()
- */
-function changePage(direction)
-{
-  if (direction == 'forward') {
-    page += 1;
-  } else {
-    page -= 1;
-
-    if (page < 1) {
-      page = 1;
-    }
-  }
-
-  performSearch();
 }
 
 /**
@@ -292,9 +253,9 @@ $('#search-box').on('keyup', function()
  */
 $('#cuisineSearch').on('keyup', function()
 {
-  // let filter = $(this).val().toUpperCase();
-  // let ul = document.getElementById("cuisines");
-  let li = document.getElementById("cuisines").getElementsByTagName('li');
+  // var filter = $(this).val().toUpperCase();
+  // var ul = document.getElementById("cuisines");
+  var li = document.getElementById("cuisines").getElementsByTagName('li');
 
   // Loop through the unordered list and hide
   // ones that don't match the search
@@ -308,38 +269,15 @@ $('#cuisineSearch').on('keyup', function()
 });
 
 /**
- * Don't rebuild the facet list if we don't have to...
- */
-/*
-function arrays_equal(a, b)
-{
-    return JSON.stringify(a) == JSON.stringify(b);
-}
-*/
-
-/**
  * Detect a search result being returned.
  */
 helper.on('result', function(content)
 {
-  console.log(content);
-
   renderHits(content); 
 
-  // disjunctiveFacets
   foodTypes = content.getFacetValues('food_type');
 
   renderFoodTypes(foodTypes);
-
-  /*
-  if (! arrays_equal(foodTypes, storeFoodTypes)) {
-    renderFoodTypes(foodTypes);
-
-    console.log('Rendering food types', foodTypes);
-  }
-  */
-
-  // storeFoodTypes = foodTypes;
 
   loading(false);
 });
