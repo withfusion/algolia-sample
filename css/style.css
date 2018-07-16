@@ -151,7 +151,8 @@ a {
   cursor: pointer;
 }
 
-#options ul li.active {
+#options ul li.active,
+#options ul li:hover {
   background-color: #1C688E;
   border-radius: 3px;
   color: #fff;
