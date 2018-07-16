@@ -113,7 +113,7 @@
   <script type="text/javascript">
     let client = algoliasearch('9TUKQ0MGR9', '15af8650ab3b7b34d0728d008dc799d5');
     let helper = algoliasearchHelper(client, 'opentableinterview', {
-      facets: ['food_type', 'payment_options'],
+      disjunctiveFacets: ['food_type', 'payment_options'],
     });
   </script>
 
