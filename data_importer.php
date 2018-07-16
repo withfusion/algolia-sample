@@ -42,7 +42,9 @@ while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 	$row++;
 
 	// Top row is the column names.
-	// We need to know the index for food_type.
+	// We need to know the index for other columns that
+	// we want to import, such as "reviews_count" and
+	// "star_count", etc.
 	if ($row == 1) {
 	    $num = count($data);
 
@@ -60,7 +62,7 @@ while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 	}
 
 	// All other rows are restaurants. We cherry pick
-	// from these rows now.
+	// from these rows now. We set up the indicies above.
 	else {
 		$finalDataset[$data[0]]['food_type'] = $data[$cuisinePosition];
 		$finalDataset[$data[0]]['stars_count'] = $data[$ratingPosition];
