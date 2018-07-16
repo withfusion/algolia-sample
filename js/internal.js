@@ -4,9 +4,9 @@ getLocate();
 
 let query = '';
 let filters = {};
+let storeFoodTypes = [];
 let page = 0;
 let coordinates = null;
-let firstSearch = true;
 let facets = {
   'food_type': [],
   'payment_options': [],
@@ -162,7 +162,7 @@ function renderPagination(totalHits, totalPages, currentPage)
 function setPage(inputPage) {
   page = inputPage;
 
-  performSearch();
+  performSearch(true);
 }
 
 /**
@@ -170,15 +170,15 @@ function setPage(inputPage) {
  */
 function renderHits(content)
 {
+  let showPage = content.page + 1;
+
+  $('#hits_counter').html('Displaying ' + content.hits.length + ' of ' + content.nbHits + ' Results | Page ' + showPage + ' of ' + content.nbPages);
+  $('#hits_pages').html(renderPagination(content.nbHits, content.nbPages, content.page));
+
   if (content.hits.length === 0) {
     $('#container').html('<p class="weak">No results...</p>');
   } else {
     $('#container').html(function() {
-      let showPage = content.page + 1;
-
-      $('#hits_counter').html('Displaying ' + content.hits.length + ' of ' + content.nbHits + ' Results | Page ' + showPage + ' of ' + content.nbPages);
-      $('#hits_pages').html(renderPagination(content.nbHits, content.nbPages, content.page));
-
       return $.map(content.hits, function(hit) {
         let html = '<div class="result">';
         html += '  <a href="' + hit.mobile_reserve_url + '" target="_blank"><img class="restaurant" src="' + hit.image_url + '" /></a>';
@@ -241,7 +241,7 @@ function renderRating(star_count)
 /**
  * Perform a search
  */
-function performSearch()
+function performSearch(skipFacetRender = false)
 {
   loading();
 
@@ -307,6 +307,15 @@ $('#cuisineSearch').on('keyup', function()
   }
 });
 
+/**
+ * Don't rebuild the facet list if we don't have to...
+ */
+/*
+function arrays_equal(a, b)
+{
+    return JSON.stringify(a) == JSON.stringify(b);
+}
+*/
 
 /**
  * Detect a search result being returned.
@@ -317,11 +326,20 @@ helper.on('result', function(content)
 
   renderHits(content); 
 
-  let foodTypes = content.getFacetValues('food_type');
+  // disjunctiveFacets
+  foodTypes = content.getFacetValues('food_type');
+
   renderFoodTypes(foodTypes);
-  console.log('Rendering food types', foodTypes);
+
+  /*
+  if (! arrays_equal(foodTypes, storeFoodTypes)) {
+    renderFoodTypes(foodTypes);
+
+    console.log('Rendering food types', foodTypes);
+  }
+  */
+
+  // storeFoodTypes = foodTypes;
 
   loading(false);
-  
-  firstSearch = false;
 });
