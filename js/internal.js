@@ -1,5 +1,6 @@
 // Everything starts here.
 // We prompt for the user's location.
+performSearch();
 getLocate();
 
 var query = '';
@@ -17,14 +18,12 @@ var facets = {
  */
 function getLocate()
 {
-  loading(true);
-
   navigator.geolocation.getCurrentPosition(positionCallback, function(error) {
       $('#locationError').show();
 
       setTimeout(function() {
         $('#locationError').hide();
-      }, 4000);
+      }, 6000);
 
       performSearch();
   });
@@ -36,6 +35,8 @@ function getLocate()
  */
 function positionCallback(position)
 {
+  loading(true);
+
   coordinates = position.coords.latitude + ', ' + position.coords.longitude;
 
   helper.aroundLatLng = coordinates;
@@ -82,7 +83,8 @@ function renderFoodTypes(cuisines)
 /**
  * For sorting an array alphabetically
  */
-function compare(a, b) {
+function compare(a, b)
+{
   if (a.name < b.name) {
     return -1;
   }
@@ -153,7 +155,8 @@ function renderPagination(totalHits, totalPages, currentPage)
 /**
  * Change the results page.
  */
-function setPage(inputPage) {
+function setPage(inputPage)
+{
   page = inputPage;
 
   performSearch();
@@ -190,7 +193,8 @@ function renderHits(content)
 /**
  * For mobile, toggle filter menu.
  */
-function showFilters() {
+function showFilters()
+{
   $('#filterDiv').toggle();
   $('#showFilters').toggleClass('on');
 }
